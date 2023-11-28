@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./dist/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.12/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <div>
+
+        <!-- navbar started -->
+        <div class="flex justify-between px-20 py-3 bg-[#7749F8]">
+            <div>
+                <a class=" text-xl text-white">Perosnol Blogging App</a>
+            </div>
+
+            <div>
+                <a href="#" class=" bg-transparent border-none text-white mr-8"> User Name </a>
+                <a href="#" class=" bg-transparent border-none text-white font-medium"> Logout </a>
+            </div>
+        </div>
+        <!-- navbar ended -->
+
+
+        <!-- header started -->
+        <div class="header px-20 py-5">
+            <header class="text-4xl font-bold text-[#343a40]"> Dashboard </header>
+        </div>
+        <!-- header ended -->
+
+
+
+        <div class="py-8 px-20 bg-[#f8f9fa]">
+
+            <!-- Blog Publish Form Start -->
+            <div class="w-[80%] px-20 py-11 shadow-gray-200 shadow-xl bg-white">
+                <form>
+                    <input type="text" placeholder="Title" class="input input-bordered input-primary w-full" />
+                    <br> <br>
+                    <textarea class="textarea textarea-primary w-full" placeholder="What is in your mind?"></textarea>
+                    <br> <br>
+                    <button type="submit" class="btn btn-primary"> Publish Blog </button>
+                </form>
+            </div>
+            <!-- Blog Publish Form End -->
+
+
+
+
+            <!-- My Blogs Section Start -->
+
+            <div class="mt-8 mb-5">
+                <h1 class="text-2xl font-medium"> My Blogs </h1>
+            </div>
+
+
+            <div class="w-[80%] px-20 py-11 shadow-gray-200 shadow-xl bg-white">
+                
+                <div>
+                    <img src="./assets/professional-man-portrait.jpg" alt="">
+                </div>
+
+
+            </div>
+
+
+
+
+            <!-- My Blogs Section End -->
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+    <script type="module" src="./script/dashboard.js"></script>
+
+</body>
+
+</html>
