@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./dist/output.css">
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.4.12/dist/full.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+
+    <div>
+
+        <!-- navbar started -->
+        <div class="flex justify-between px-20 py-3 bg-[#7749F8]">
+            <div>
+                <a class=" text-[22px] text-white">Perosnol Blogging App</a>
+            </div>
+
+            <div class="flex items-center">
+                <a href="#" class=" bg-transparent border-none text-white mr-8"> User Name </a>
+                <a href="#" class=" bg-transparent border-none text-white font-medium"> Logout </a>
+            </div>
+
+        </div>
+        <!-- navbar ended -->
+
+
+        <!-- header started -->
+        <div class="header px-20 py-5">
+            <header class="text-3xl font-bold text-[#343a40]"> Login </header>
+        </div>
+        <!-- header ended -->
+
+
+        <div class="py-8 px-20 bg-[#f8f9fa]">
+
+            <!-- Blog Publish Form Start -->
+            <div class="w-[70%] px-20 py-11 shadow-gray-200 shadow-xl bg-white">
+                <form>
+                    <input id="title"
+                        class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
+                        type="text" placeholder="Title" />
+
+                    <textarea id="text"
+                        class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
+                        placeholder="What is in your mind?" rows="4"></textarea>
+
+                    <button class="py-2 px-4 rounded-lg bg-[#7749f8]" type="submit"> Publish Blog </button>
+                </form>
+            </div>
+            <!-- Blog Publish Form End -->
+
+
+            <!-- My Blogs Section Start -->
+
+            <div class="mt-8">
+                <h1 class="text-2xl font-medium"> My Blogs </h1>
+            </div>
+
+
+            <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
+
+                <div class="flex">
+
+                    <div>
+                        <img class="rounded-md" src="./assets/profile-pic.JPG" alt="profile-pic" width="70px">
+                    </div>
+                    <div class="pl-4">
+                        <h2 class="leading-6 text-lg font-semibold"> An Action Button Could Be <br> Coming to the iPhone
+                            15 </h2>
+                        <p class="mt-1 text-sm font-medium text-[#3f3f3f]"> Salman Ahmed - August 16th, 2023 </p>
+                    </div>
+
+                </div>
+
+                <div class="py-5">
+                    <p class="text-[15px] text-[#757575]"> Apple could be putting an Action button on your next iPhone.
+                        According to a July report from
+                        MacRumors, code in the fourth iOS 17 developer beta hints at functionality for an Action button
+                        on the next-gen iPhone 15 Pro and Pro Max models. <br> Apple introduced the Action button on the
+                        Apple Watch Ultra. It's a physical button on the side of the Apple Watch Ultra that allows you
+                        to run a preselected function or program when you press it without unlocking your device or
+                        navigating to an app. Some of the preselected functions include starting a stopwatch, beginning
+                        a workout and turning on your flashlight.</p>
+                </div>
+
+                <div>
+                    <button> <a href="#" class="text-sm text-[#7749F8] mr-3"> Delete </a> </button>
+                    <button> <a href="#" class="text-sm text-[#7749F8]"> Edit </a> </button>
+                </div>
+
+            </div>
+
+
+            <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
+
+                <div class="flex">
+
+                    <div>
+                        <img class="rounded-md" src="./assets/profile-pic.JPG" alt="profile-pic" width="70px">
+                    </div>
+                    <div class="pl-4">
+                        <h2 class="leading-6 text-lg font-semibold"> An Action Button Could Be <br> Coming to the iPhone
+                            15 </h2>
+                        <p class="mt-1 text-sm font-medium text-[#3f3f3f]"> Salman Ahmed - August 16th, 2023 </p>
+                    </div>
+
+                </div>
+
+                <div class="py-5">
+                    <p class="text-[15px] text-[#757575]"> Apple could be putting an Action button on your next iPhone.
+                        According to a July report from
+                        MacRumors, code in the fourth iOS 17 developer beta hints at functionality for an Action button
+                        on the next-gen iPhone 15 Pro and Pro Max models. <br> Apple introduced the Action button on the
+                        Apple Watch Ultra. It's a physical button on the side of the Apple Watch Ultra that allows you
+                        to run a preselected function or program when you press it without unlocking your device or
+                        navigating to an app. Some of the preselected functions include starting a stopwatch, beginning
+                        a workout and turning on your flashlight.</p>
+                </div>
+
+                <div>
+                    <button> <a href="#" class="text-sm text-[#7749F8] mr-3"> Delete </a> </button>
+                    <button> <a href="#" class="text-sm text-[#7749F8]"> Edit </a> </button>
+                </div>
+
+            </div>
+
+
+
+            <!-- My Blogs Section End -->
+
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+    <script type="module" src="./script/dashboard.js"></script>
+
+</body>
+
+</html>
