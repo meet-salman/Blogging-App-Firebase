@@ -22,8 +22,8 @@
             </div>
 
             <div class="flex items-center">
-                <a href="#" class=" bg-transparent border-none text-white mr-8"> User Name </a>
-                <a href="#" class=" bg-transparent border-none text-white font-medium"> Logout </a>
+                <a href="#" id="user-name" class=" bg-transparent border-none text-white mr-8"> </a>
+                <a href="#" id="logout-btn" class=" bg-transparent border-none text-white font-medium"> Logout </a>
             </div>
 
         </div>
@@ -32,7 +32,7 @@
 
         <!-- header started -->
         <div class="header px-20 py-5">
-            <header class="text-3xl font-bold text-[#343a40]"> Login </header>
+            <header class="text-3xl font-bold text-[#343a40]"> Dashboard </header>
         </div>
         <!-- header ended -->
 
@@ -42,12 +42,12 @@
 
             <!-- Blog Publish Form Start -->
             <div class="w-[70%] px-20 py-11 shadow-gray-200 shadow-xl bg-white">
-                <form>
+                <form id="blog-form">
                     <input id="title"
                         class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
                         type="text" placeholder="Title" />
 
-                    <textarea id="text"
+                    <textarea id="content"
                         class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
                         placeholder="What is in your mind?" rows="4"></textarea>
 
@@ -55,6 +55,7 @@
                 </form>
             </div>
             <!-- Blog Publish Form End -->
+
 
             <!-- My Blogs Section Start -->
             <div>

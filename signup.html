@@ -14,7 +14,7 @@
 
 <body>
 
-    <div class="h-max bg-[#f8f9fa]">
+    <div class=" bg-[#f8f9fa]">
 
         <!-- navbar started -->
         <div class="flex justify-between px-20 py-3 bg-[#7749F8]">
@@ -37,8 +37,7 @@
 
 
         <!-- Signup Form Start -->
-
-        <div class="w-[40%] my-12  mx-auto py-12 px-20 shadow-gray-200 shadow-xl bg-white">
+        <div class="w-[40%] my-12 mx-auto py-12 px-20 shadow-gray-200 shadow-xl bg-white">
 
             <form id="signup-form">
                 <input id="first-name"
@@ -56,20 +55,26 @@
                 <input id="confirm-password"
                     class="w-full mb-4 p-2 border-2 border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
                     type="password" placeholder="Repeat Password">
+                <input id="profile-pic" type="file"
+                    class="file-input file-input-bordered file-input-xs w-full max-w-xs" />
 
-                <div class="text-center">
+
+                <div class="mt-4 text-center">
                     <button class="py-2 px-4 rounded-lg bg-[#7749f8]" type="submit"> Signup </button>
                 </div>
 
             </form>
 
         </div>
-
         <!-- Signup Form End -->
 
 
-
-
+        <!-- Loading Modal -->
+        <div>
+            <dialog id="modal" class="modal">
+                <span class="loading loading-spinner loading-md"></span>
+            </dialog>
+        </div>
 
 
 
@@ -86,7 +91,8 @@
     </div>
 
 
-    <script type="module" src="script/signup.js"></script>
+
+    <script type="module" src="./script/signup.js"></script>
 
 </body>
 
