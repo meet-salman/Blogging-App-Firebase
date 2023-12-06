@@ -1,4 +1,4 @@
-import { auth, db, collection, addDoc } from "./config.js";
+import { auth, db, collection, addDoc, orderBy } from "./config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
@@ -36,7 +36,7 @@ onAuthStateChanged(auth, async (user) => {
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
 
-            console.log(doc.data());
+            // console.log(doc.data());
             userData = doc.data();
             userName.innerHTML = doc.data().name;
             gettingBlogs();
@@ -71,7 +71,9 @@ blogForm.addEventListener('submit', (e) => {
     const blogPost = {
         title: title.value,
         content: content.value,
+        name: userData.name,
         uid: auth.currentUser.uid,
+        profile: userData.profilePic,
         date: formattedDate
     }
     addDoc(collection(db, "Blog Posts"), blogPost)
@@ -93,9 +95,9 @@ let allBlogs = [];
 async function gettingBlogs() {
     allBlogs = [];
 
-    const q = query(collection(db, "Blog Posts"), where("uid", "==", userData.uid));
-
+    const q = query(collection(db, "Blog Posts"), where("uid", "==", userData.uid), orderBy('date', 'desc'));
     const querySnapshot = await getDocs(q);
+
     querySnapshot.forEach((doc) => {
 
         // console.log(doc.data());
@@ -103,45 +105,42 @@ async function gettingBlogs() {
         // console.log(allBlogs);
         renderingBlogs();
     });
+
 };
 
 
 // Rendering Blogs
 function renderingBlogs() {
-
     myBlogs.innerHTML = '';
 
     allBlogs.forEach(blog => {
 
         myBlogs.innerHTML += `
+        
+                 <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
     
-             <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
-
-                  <div class="flex">
-
-                    <div>
-                        <img class="blog-profile-pic rounded-md" src="${userData.profilePic}" alt="profile-pic">
+                      <div class="flex">
+    
+                        <div>
+                            <img class="blog-profile-pic rounded-md" src="${blog.profile}" alt="profile-pic">
+                        </div>
+                        <div class="pl-4">
+                            <h2 class="leading-6 text-lg font-semibold"> ${blog.title} </h2>
+                            <p class="mt-1 text-sm font-medium text-[#3f3f3f]"> ${blog.name} - ${blog.date} </p>
+                        </div>
+    
+                       </div>
+    
+                       <div class="py-5">
+                          <p class="text-[15px] text-[#757575]"> ${blog.content} </p>
+                       </div>
+    
+                        <div>
+                            <button> <a href="#" class="text-sm text-[#7749F8] mr-3"> Delete </a> </button>
+                            <button> <a href="#" class="text-sm text-[#7749F8]"> Edit </a> </button>
+                        </div>
+    
                     </div>
-                    <div class="pl-4">
-                        <h2 class="leading-6 text-lg font-semibold"> ${blog.title} </h2>
-                        <p class="mt-1 text-sm font-medium text-[#3f3f3f]"> ${userData.name} - ${blog.date} </p>
-                    </div>
-
-                   </div>
-
-                   <div class="py-5">
-                      <p class="text-[15px] text-[#757575]"> ${blog.content} </p>
-                   </div>
-
-                    <div>
-                        <button> <a href="#" class="text-sm text-[#7749F8] mr-3"> Delete </a> </button>
-                        <button> <a href="#" class="text-sm text-[#7749F8]"> Edit </a> </button>
-                    </div>
-
-                </div>
-    `
+        `
     });
-
-
-
 };
