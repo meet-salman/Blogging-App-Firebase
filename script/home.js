@@ -74,8 +74,7 @@ let allBlogs = [];
 async function gettingBlogs() {
     allBlogs = [];
 
-    const q = query(collection(db, "Blog Posts"), orderBy('date', 'desc'));
-
+    const q = query(collection(db, "Blog Posts"), orderBy('time', 'desc'), orderBy('date', 'desc'));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
@@ -85,7 +84,9 @@ async function gettingBlogs() {
         // console.log(allBlogs);
         renderingBlogs();
     });
+
 };
+
 
 
 // Rendering Blogs
@@ -98,28 +99,23 @@ function renderingBlogs() {
         
                  <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
     
-                      <div class="flex">
+                    <div class="flex">
     
                         <div>
-                            <img class="blog-profile-pic rounded-md" src="${blog.profile}" alt="profile-pic">
+                            <img class="blog-profile-pic rounded-md" src="${blog.userData.profilePic}" alt="profile-pic">
                         </div>
                         <div class="pl-4">
                             <h2 class="leading-6 text-lg font-semibold"> ${blog.title} </h2>
-                            <p class="mt-1 text-sm font-medium text-[#3f3f3f]"> ${blog.name} - ${blog.date} </p>
+                            <p class="mt-1 text-sm font-medium text-[#3f3f3f]"> ${blog.userData.name} - ${blog.date} </p>
                         </div>
     
-                       </div>
+                    </div>
     
                        <div class="py-5">
                           <p class="text-[15px] text-[#757575]"> ${blog.content} </p>
                        </div>
     
-                        <div>
-                            <button> <a href="#" class="text-sm text-[#7749F8] mr-3"> Delete </a> </button>
-                            <button> <a href="#" class="text-sm text-[#7749F8]"> Edit </a> </button>
-                        </div>
-    
-                    </div>
+                </div>
         `
     });
 };
