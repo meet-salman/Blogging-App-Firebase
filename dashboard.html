@@ -16,17 +16,16 @@
     <div>
 
         <!-- navbar started -->
-        <div class="flex justify-between px-20 py-3 bg-[#7749F8]">
+        <nav class="flex items-center justify-between px-20 py-3 bg-[#7749F8]">
             <div>
-                <a class=" text-[22px] text-white">Perosnol Blogging App</a>
+                <a href="./home.html" class="text-[22px] text-white"> Perosnol Blogging App </a>
             </div>
 
-            <div class="flex items-center">
-                <a href="#" id="user-name" class=" bg-transparent border-none text-white mr-8"> </a>
-                <a href="#" id="logout-btn" class=" bg-transparent border-none text-white font-medium"> Logout </a>
+            <div id="user-profile" class="flex-none gap-2">
+
             </div>
 
-        </div>
+        </nav>
         <!-- navbar ended -->
 
 
@@ -37,7 +36,6 @@
         <!-- header ended -->
 
 
-        <!-- Blogs Section Start -->
         <div class="py-8 px-20 bg-[#f8f9fa]">
 
             <!-- Blog Publish Form Start -->
@@ -45,16 +43,18 @@
                 <form id="blog-form">
                     <input id="title"
                         class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
-                        type="text" placeholder="Title"  required>
+                        type="text" placeholder="Title" required>
 
                     <textarea id="content"
                         class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
                         placeholder="What is in your mind?" rows="4" required></textarea>
 
-                    <button class="py-2 px-4 rounded-lg bg-[#7749f8]" type="submit"> Publish Blog </button>
+                    <button class="button" type="submit"> Publish Blog </button>
                 </form>
             </div>
             <!-- Blog Publish Form End -->
+
+
 
             <!-- My Blogs Section Start -->
             <div>
@@ -117,7 +117,6 @@
             <!-- My Blogs Section End -->
 
         </div>
-        <!-- Blogs Section End -->
 
 
 

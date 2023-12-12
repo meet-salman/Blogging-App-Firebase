@@ -3,8 +3,7 @@ import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/
 import { query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 
-const loginBtn = document.querySelector('#login-btn');
-const logoutBtn = document.querySelector('#logout-btn');
+const userProfile = document.querySelector('#user-profile');
 const goodTime = document.querySelector('#good-time');
 const allBlogsSec = document.querySelector('#all-blogs-sec');
 
@@ -37,7 +36,6 @@ let userData = {};
 // Checking User Login or Logout
 onAuthStateChanged(auth, async (user) => {
     if (user) {
-        logoutBtn.className = "block bg-transparent border-none text-white font-medium"
         const uid = user.uid;
 
         const q = query(collection(db, "users"), where("uid", "==", uid));
@@ -50,22 +48,54 @@ onAuthStateChanged(auth, async (user) => {
             gettingBlogs()
         });
 
+        userProfile.innerHTML = `
+
+        <div class="dropdown dropdown-end">
+            <div class="flex items-center">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                   <div class="w-8 rounded-full border border-white">
+                       <img src="${userData.profilePic}" alt="profile-pic">
+                    </div>
+                </label>
+               <p class="text-lg text-white font-medium"> ${userData.name} </p>
+            </div>
+            
+            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                 <li><button> <a href="./profile.html"> Profile </a> </button></li>
+                 <li><button> <a href="./dashboard.html"> Dashboard </a> </button></li>
+                 <li><button id="logout-btn"> Log Out </button></li>
+            </ul>
+        </div>
+        `
+
+        // User logout Function
+        const logoutBtn = document.querySelector('#logout-btn');
+        logoutBtn.addEventListener('click', () => {
+
+            signOut(auth).then(() => {
+                window.location = 'home.html'
+            }).catch((error) => {
+                // An error happened.
+            });
+        });
+
     } else {
-        loginBtn.className = "block bg-transparent border-none text-white mr-8"
+        userProfile.innerHTML = `
+
+            <div class="dropdown dropdown-end">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                    <div class="w-8 rounded-full">
+                        <img src="./assets/user-icon.png" alt="profile-pic">
+                    </div>
+                </label>
+                <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                    <li><button> <a href="./login.html"> Login </a> </button></li>
+                    <li><button> <a href="./signup.html"> Register </a> </button></li>
+                </ul>
+            </div>
+            `
         gettingBlogs();
     }
-});
-
-
-// User logout Function
-logoutBtn.addEventListener('click', () => {
-
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        window.location = 'home.html'
-    }).catch((error) => {
-        // An error happened.
-    });
 });
 
 
@@ -86,7 +116,6 @@ async function gettingBlogs() {
     });
 
 };
-
 
 
 // Rendering Blogs

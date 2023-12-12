@@ -2,14 +2,11 @@ import { auth, db, collection, addDoc, orderBy } from "./config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 import { query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
-
-const userName = document.querySelector('#user-name');
-const logoutBtn = document.querySelector('#logout-btn');
+const userProfile = document.querySelector('#user-profile');
 const blogForm = document.querySelector('#blog-form');
 const myBlogs = document.querySelector('#my-blogs');
 const title = document.querySelector('#title');
 const content = document.querySelector('#content');
-let modal = document.querySelector('#modal');
 
 
 // Date & Time
@@ -22,7 +19,6 @@ const monthName = months[date.getMonth()];
 const day = date.getDate();
 const year = date.getFullYear();
 const formattedDate = `${monthName}, ${day} ${year}`;
-
 
 
 
@@ -39,28 +35,46 @@ onAuthStateChanged(auth, async (user) => {
 
             // console.log(doc.data());
             userData = doc.data();
-            userName.innerHTML = doc.data().name;
+            // userName.innerHTML = doc.data().name;
             gettingBlogs();
         });
 
+        userProfile.innerHTML = `
 
+        <div class="dropdown dropdown-end">
+            <div class="flex items-center">
+                <label tabindex="0" class="btn btn-ghost btn-circle avatar">
+                   <div class="w-8 rounded-full border border-white">
+                       <img src="${userData.profilePic}" alt="profile-pic">
+                    </div>
+                </label>
+               <p class="text-lg text-white font-medium"> ${userData.name} </p>
+            </div>
+            
+            <ul tabindex="0" class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+                 <li><button> <a href="./profile.html"> Profile </a> </button></li>
+                 <li><button> <a href="./dashboard.html"> Dashboard </a> </button></li>
+                 <li><button id="logout-btn"> Log Out </button></li>
+            </ul>
+        </div>
+        `
 
+        // User logout Function
+        const logoutBtn = document.querySelector('#logout-btn');
+
+        logoutBtn.addEventListener('click', () => {
+
+            signOut(auth).then(() => {
+                // Sign-out successful.
+                window.location = 'home.html'
+            }).catch((error) => {
+                // An error happened.
+            });
+        });
 
     } else {
         window.location = 'home.html'
     }
-});
-
-
-// User logout Function
-logoutBtn.addEventListener('click', () => {
-
-    signOut(auth).then(() => {
-        // Sign-out successful.
-        window.location = 'home.html'
-    }).catch((error) => {
-        // An error happened.
-    });
 });
 
 
