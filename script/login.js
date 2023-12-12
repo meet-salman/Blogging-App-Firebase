@@ -7,7 +7,7 @@ const loginForm = document.querySelector('#login-form');
 const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 const error = document.querySelector('#error');
-let modal = document.querySelector('#modal');
+let loadingModal = document.querySelector('#loading-modal');
 
 
 // // Changing Page Location If User Login 
@@ -53,7 +53,7 @@ userProfile.innerHTML = `
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    modal.showModal()
+    loadingModal.showModal()
 
     signInWithEmailAndPassword(auth, email.value, password.value)
         .then((userCredential) => {

@@ -116,7 +116,71 @@
             </div>
             <!-- My Blogs Section End -->
 
+
+            <!-- Edit Post Modal Start -->
+            <dialog id="blog-edit-modal" class="modal modal-bottom sm:modal-middle">
+
+                <div class="modal-box">
+
+                    <h2 class="font-medium text-[22px] mb-4"> Edit Post </h2>
+
+                    <form method="dialog">
+                        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+
+                    <form id="update-post">
+                        <input id="edited-title"
+                            class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
+                            type="text" placeholder="Title">
+
+                        <textarea id="edited-content"
+                            class="w-full mb-4 p-2 border-2  border-gray-200 rounded-lg outline-1 outline-[#7749F8]"
+                            placeholder="What is in your mind?" rows="4"></textarea>
+
+                        <button class="button" type="submit"> Update </button>
+                    </form>
+
+                </div>
+
+            </dialog>
+            <!-- Edit Post Modal End -->
+
+
+            <!-- Delete Post Modal Start -->
+            <dialog id="blog-dlt-modal" class="modal modal-bottom sm:modal-middle">
+
+                <div class="modal-box">
+
+                    <h2 class="font-medium text-[22px] mb-4"> Edit Post </h2>
+                    <p> Are you sure to delete post?</p>
+
+                    <div class="modal-action">
+
+                        <form method="dialog">
+                            <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                        </form>
+
+                        <button id="dlt-post" class="button"> Delete </button>
+                    </div>
+
+
+                </div>
+
+            </dialog>
+            <!-- Delete Post Modal End -->
+
+
+            <!-- Loading Modal -->
+            <div>
+                <dialog id="loading-modal" class="modal">
+                    <span class="loading loading-spinner loading-md"></span>
+                </dialog>
+            </div>
+
         </div>
+
+
+
 
 
 

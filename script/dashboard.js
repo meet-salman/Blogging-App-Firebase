@@ -1,12 +1,21 @@
-import { auth, db, collection, addDoc, orderBy } from "./config.js";
+import { auth, db, collection, doc, addDoc, getDocs, query, where, orderBy } from "./config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
+import { updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 const userProfile = document.querySelector('#user-profile');
 const blogForm = document.querySelector('#blog-form');
 const myBlogs = document.querySelector('#my-blogs');
 const title = document.querySelector('#title');
 const content = document.querySelector('#content');
+
+const blogEditModal = document.querySelector('#blog-edit-modal');
+const editedTitle = document.querySelector('#edited-title');
+const editedContent = document.querySelector('#edited-content');
+const updatePostBtn = document.querySelector('#update-post');
+const loadingModal = document.querySelector('#loading-modal');
+
+const blogDltModal = document.querySelector('#blog-dlt-modal');
+const dltPostBtn = document.querySelector('#dlt-post');
 
 
 // Date & Time
@@ -81,6 +90,7 @@ onAuthStateChanged(auth, async (user) => {
 // Blog Posting
 blogForm.addEventListener('submit', (e) => {
     e.preventDefault();
+    loadingModal.showModal();
 
     // Add User to DB
     const blogPost = {
@@ -96,6 +106,7 @@ blogForm.addEventListener('submit', (e) => {
             title.value = '';
             content.value = '';
             gettingBlogs();
+            loadingModal.close();
         })
         .catch((rej) => {
             console.log(rej);
@@ -115,11 +126,11 @@ async function gettingBlogs() {
     querySnapshot.forEach((doc) => {
 
         // console.log(doc.data());
-        allBlogs.push(doc.data());
+        allBlogs.push({ ...doc.data(), docId: doc.id });
         // console.log(allBlogs);
-        renderingBlogs();
     });
-
+    renderingBlogs();
+    
 };
 
 
@@ -131,7 +142,7 @@ function renderingBlogs() {
 
         myBlogs.innerHTML += `
         
-                 <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
+                <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
     
                     <div class="flex">
     
@@ -145,16 +156,61 @@ function renderingBlogs() {
     
                     </div>
     
-                       <div class="py-5">
-                          <p class="text-[15px] text-[#757575]"> ${blog.content} </p>
-                       </div>
+                    <div class="py-5">
+                        <p class="text-[15px] text-[#757575]"> ${blog.content} </p>
+                    </div>
     
-                        <div>
-                            <button> <a href="#" class="text-sm text-[#7749F8] mr-3"> Delete </a> </button>
-                            <button> <a href="#" class="text-sm text-[#7749F8]"> Edit </a> </button>
-                        </div>
-    
+                    <div>
+                        <button id="dlt-btn" class="text-sm text-[#7749F8] mr-3"> Delete </button>
+                        <button id="edit-btn" class="text-sm text-[#7749F8]"> Edit </button>
+                    </div>
+
                 </div>
         `
+    });
+
+    const editBtn = document.querySelectorAll('#edit-btn');
+    const dltBtn = document.querySelectorAll('#dlt-btn');
+
+
+    editBtn.forEach((btn, index) => {
+
+        btn.addEventListener('click', () => {
+            blogEditModal.showModal();
+
+            editedTitle.value = allBlogs[index].title;
+            editedContent.value = allBlogs[index].content;
+
+            updatePostBtn.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loadingModal.showModal();
+
+                await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
+                    title: editedTitle.value,
+                    content: editedContent.value
+                });
+                gettingBlogs();
+                blogEditModal.close();
+                loadingModal.close();
+            });
+        });
+    });
+
+
+    dltBtn.forEach((btn, index) => {
+
+        btn.addEventListener('click', () => {
+
+            blogDltModal.showModal();
+
+            dltPostBtn.addEventListener('click', async () => {
+                loadingModal.showModal();
+
+                await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
+                gettingBlogs();
+                blogDltModal.close();
+                loadingModal.close();
+            });
+        });
     });
 };

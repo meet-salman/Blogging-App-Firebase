@@ -1,6 +1,5 @@
-import { auth, db, collection, orderBy } from "./config.js";
+import { auth, db, collection, getDocs, query, where, orderBy } from "./config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
-import { query, where, getDocs } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js";
 
 
 const userProfile = document.querySelector('#user-profile');

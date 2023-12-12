@@ -11,7 +11,8 @@ const email = document.querySelector('#email');
 const password = document.querySelector('#password');
 const confirmPassword = document.querySelector('#confirm-password');
 let profilePic = document.querySelector('#profile-pic');
-let modal = document.querySelector('#modal');
+let error = document.querySelector('#error');
+let loadingModal = document.querySelector('#modal');
 
 
 userProfile.innerHTML = `
@@ -34,44 +35,55 @@ userProfile.innerHTML = `
 signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
-    modal.showModal();
+    if (password.value === confirmPassword.value) {
+        error.innerHTML = ''
+        loadingModal.showModal();
 
-    // User Register
-    createUserWithEmailAndPassword(auth, email.value, password.value)
-        .then((userCredential) => {
-            const user = userCredential.user;
+        // User Register
+        createUserWithEmailAndPassword(auth, email.value, password.value)
 
-            // Uploading Profile Picture
-            profilePic = profilePic.files[0]
-            const storageRef = ref(storage, email.value);
+            .then((userCredential) => {
+                const user = userCredential.user;
 
-            uploadBytes(storageRef, profilePic).then(() => {
+                // Uploading Profile Picture
+                profilePic = profilePic.files[0]
+                const storageRef = ref(storage, email.value);
 
-                // GEtting Profile Picture URL
-                getDownloadURL(storageRef).then((url) => {
+                uploadBytes(storageRef, profilePic).then(() => {
 
-                    // Add User to DB
-                    const userData = {
-                        name: firstName.value + ' ' + lastName.value,
-                        email: email.value,
-                        uid: user.uid,
-                        profilePic: url
-                    }
-                    addDoc(collection(db, "users"), userData)
-                        .then(() => {
-                            console.log('User Added to BD');
-                            window.location = 'dashboard.html';
-                        })
-                        .catch((rej) => {
-                            console.log(rej);
-                        });
+                    // GEtting Profile Picture URL
+                    getDownloadURL(storageRef).then((url) => {
+
+                        // Add User to DB
+                        const userData = {
+                            name: firstName.value + ' ' + lastName.value,
+                            email: email.value,
+                            uid: user.uid,
+                            profilePic: url
+                        }
+                        addDoc(collection(db, "users"), userData)
+                            .then(() => {
+                                console.log('User Added to BD');
+                                window.location = 'dashboard.html';
+                            })
+                            .catch((rej) => {
+                                console.log(rej);
+                            });
+                    });
                 });
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                console.log(errorMessage);
             });
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorMessage);
-        });
+
+
+    } 
+    else {
+        error.innerHTML = "Please enter same password!"
+    }
+
+
 });
 
