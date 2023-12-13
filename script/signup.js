@@ -12,7 +12,7 @@ const password = document.querySelector('#password');
 const confirmPassword = document.querySelector('#confirm-password');
 let profilePic = document.querySelector('#profile-pic');
 let error = document.querySelector('#error');
-let loadingModal = document.querySelector('#modal');
+let loadingModal = document.querySelector('#loading-modal');
 
 
 userProfile.innerHTML = `

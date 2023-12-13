@@ -1,34 +1,13 @@
 import { auth, db, collection, getDocs, query, where, orderBy } from "./config.js";
 import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js";
 
+const data = localStorage.getItem('specificUser');
+const specificUser = JSON.parse(data);
 
 const userProfile = document.querySelector('#user-profile');
-const goodTime = document.querySelector('#good-time');
-const allBlogsSec = document.querySelector('#all-blogs-sec');
-
-
-// Getting Time To Welcome Users
-const rightNow = new Date();
-let hours = rightNow.getHours();
-const amPM = hours >= 12 ? 'PM' : 'AM';
-
-// console.log(`${hours} : ${minutes} ${amPM}`);
-
-if (amPM === 'AM' && hours >= 4 && hours < 12) {
-
-    goodTime.innerHTML = 'Good Morning Readers'
-
-} else if (amPM === 'PM' && hours >= 12 && hours < 16) {
-
-    goodTime.innerHTML = 'Good After Noon Readers'
-
-} else if (amPM === 'PM' && hours >= 16 && hours < 20) {
-
-    goodTime.innerHTML = 'Good Evening Readers'
-
-} else {
-    goodTime.innerHTML = 'Good Night Readers'
-}
+const userProfileData = document.querySelector('#user-profile-data');
+const userBlogsFrom = document.querySelector('#user-blogs-from');
+const userBlogs = document.querySelector('#user-blogs');
 
 
 let userData = {};
@@ -37,7 +16,7 @@ onAuthStateChanged(auth, async (user) => {
     if (user) {
         const uid = user.uid;
 
-        const q = query(collection(db, "users"), where("uid", "==", uid));
+        const q = query(collection(db, "users"), where("uid", "==", specificUser));
 
         const querySnapshot = await getDocs(q);
         querySnapshot.forEach((doc) => {
@@ -98,33 +77,46 @@ onAuthStateChanged(auth, async (user) => {
 });
 
 
+
 // Getting Blogs from DB
 let allBlogs = [];
 async function gettingBlogs() {
     allBlogs = [];
 
-    const q = query(collection(db, "Blog Posts"), orderBy('time', 'desc'), orderBy('date', 'desc'));
+    const q = query(collection(db, "Blog Posts"), where("userData.uid", "==", specificUser), orderBy('time', 'desc'), orderBy('date', 'desc'));;
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
 
         // console.log(doc.data());
         allBlogs.push(doc.data());
-        // console.log(allBlogs);
     });
+    // console.log(allBlogs);
     renderingBlogs();
+
+    userProfileData.innerHTML = `
+    
+    <a href="#" class="underline"> ${allBlogs[0].userData.email} </a>
+    <h2 class="text-2xl font-semibold"> ${allBlogs[0].userData.name} </h2>
+
+    <div class="mt-3">
+        <img class="rounded-lg w-[250px] h-[250px]"
+            src="${allBlogs[0].userData.profilePic}" alt="profile-pic">
+    </div>
+    
+    `
 };
 
 
 // Rendering Blogs
 function renderingBlogs() {
-    allBlogsSec.innerHTML = '';
+    userBlogs.innerHTML = '';
 
-    allBlogs.forEach((blog, index) => {
+    allBlogs.forEach(blog => {
 
-        allBlogsSec.innerHTML += `
+        userBlogs.innerHTML += `
         
-                <div class="w-[70%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
+                <div class="w-[80%] my-6 p-5 rounded-lg shadow-gray-200 shadow-lg bg-white">
     
                     <div class="flex">
     
@@ -141,26 +133,8 @@ function renderingBlogs() {
                     <div class="py-5">
                         <p class="text-[15px] text-[#757575]"> ${blog.content} </p>
                     </div>
-
-                    <div>
-                        <button id="see-all-btn" class="text-sm text-[#7749F8]"> See all from this user </button>
-                    </div>
     
                 </div>
         `
-    });
-
-    const seeAllBtn = document.querySelectorAll('#see-all-btn');
-
-    seeAllBtn.forEach((btn, index) => {
-
-        btn.addEventListener('click', () => {
-            console.log(index);
-            console.log(allBlogs[index].userData.uid);
-
-            let specificUser = JSON.stringify(allBlogs[index].userData.uid);
-            localStorage.setItem('specificUser', specificUser);
-            window.location = 'userblogs.html';
-        })
     });
 };

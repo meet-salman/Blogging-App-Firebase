@@ -130,7 +130,6 @@ async function gettingBlogs() {
         // console.log(allBlogs);
     });
     renderingBlogs();
-    
 };
 
 
