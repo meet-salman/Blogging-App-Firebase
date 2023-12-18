@@ -11,7 +11,7 @@ const content = document.querySelector('#content');
 const blogEditModal = document.querySelector('#blog-edit-modal');
 const editedTitle = document.querySelector('#edited-title');
 const editedContent = document.querySelector('#edited-content');
-const updatePostBtn = document.querySelector('#update-post');
+const updatePostForm = document.querySelector('#update-post');
 const loadingModal = document.querySelector('#loading-modal');
 
 const blogDltModal = document.querySelector('#blog-dlt-modal');
@@ -23,7 +23,7 @@ const date = new Date();
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const time = date.getTime();
+// const time = date.getTime();
 const monthName = months[date.getMonth()];
 const day = date.getDate();
 const year = date.getFullYear();
@@ -96,7 +96,7 @@ blogForm.addEventListener('submit', (e) => {
     const blogPost = {
         title: title.value,
         content: content.value,
-        time: time,
+        time: date.getTime(),
         date: formattedDate,
         userData
     }
@@ -174,42 +174,72 @@ function renderingBlogs() {
 
     editBtn.forEach((btn, index) => {
 
-        btn.addEventListener('click', () => {
-            blogEditModal.showModal();
+        // btn.addEventListener('click', () => {
+        //     blogEditModal.showModal();
 
-            editedTitle.value = allBlogs[index].title;
-            editedContent.value = allBlogs[index].content;
+        //     editedTitle.value = allBlogs[index].title;  
+        //     editedContent.value = allBlogs[index].content;
 
-            updatePostBtn.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                loadingModal.showModal();
+        //     updatePostForm.addEventListener('submit', async (e) => {
+        //         e.preventDefault();
+        //         loadingModal.showModal();
+        //         console.log(index);
 
-                await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
-                    title: editedTitle.value,
-                    content: editedContent.value
-                });
-                gettingBlogs();
-                blogEditModal.close();
-                loadingModal.close();
+        //         await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
+        //             title: editedTitle.value,
+        //             content: editedContent.value
+        //         });
+        //         gettingBlogs();
+        //         blogEditModal.close();
+        //         loadingModal.close();
+        //     });
+        // });
+
+
+        btn.addEventListener('click', async () => {
+            loadingModal.showModal()
+
+            await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
+                title: prompt('Enter Title'),
+                content: prompt('Enter Description')
             });
-        });
+            gettingBlogs();
+            loadingModal.close()
+        })
+
     });
 
 
     dltBtn.forEach((btn, index) => {
 
-        btn.addEventListener('click', () => {
+        // btn.addEventListener('click', () => {
 
-            blogDltModal.showModal();
+        //     blogDltModal.showModal();
 
-            dltPostBtn.addEventListener('click', async () => {
-                loadingModal.showModal();
+        //     dltPostBtn.addEventListener('click', async () => {
+        //         loadingModal.showModal();
 
-                await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
-                gettingBlogs();
-                blogDltModal.close();
-                loadingModal.close();
-            });
-        });
+        //         await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
+        //         gettingBlogs();
+        //         blogDltModal.close();
+        //         loadingModal.close();
+        //     });
+        // });
+
+        btn.addEventListener('click', async () => {
+            loadingModal.showModal();
+            await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
+            gettingBlogs();
+            loadingModal.close();
+
+        })
+
     });
 };
+
+
+
+
+
+
+

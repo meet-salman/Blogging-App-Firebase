@@ -1,15 +1,17 @@
-*{
+* {
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.blog-profile-pic{
+.blog-profile-pic {
     height: 70px;
     width: 70px;
 }
 
-.button{
+.button {
     padding: 8px 16px 8px 16px;
     color: #fff;
     border-radius: 8px;
     background-color: #7749F8 !important;
 }
+
+
