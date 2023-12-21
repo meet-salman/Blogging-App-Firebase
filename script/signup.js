@@ -79,7 +79,7 @@ signupForm.addEventListener('submit', (e) => {
             });
 
 
-    } 
+    }
     else {
         error.innerHTML = "Please enter same password!"
     }
