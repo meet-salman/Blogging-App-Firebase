@@ -23,12 +23,10 @@ const date = new Date();
 
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-// const time = date.getTime();
 const monthName = months[date.getMonth()];
 const day = date.getDate();
 const year = date.getFullYear();
 const formattedDate = `${monthName}, ${day} ${year}`;
-
 
 
 let userData = {};
@@ -96,7 +94,7 @@ blogForm.addEventListener('submit', (e) => {
     const blogPost = {
         title: title.value,
         content: content.value,
-        time: date.getTime(),
+        // time: time,
         date: formattedDate,
         userData
     }
@@ -120,7 +118,7 @@ let allBlogs = [];
 async function gettingBlogs() {
     allBlogs = [];
 
-    const q = query(collection(db, "Blog Posts"), where("userData.uid", "==", userData.uid), orderBy('time', 'desc'), orderBy('date', 'desc'));
+    const q = query(collection(db, "Blog Posts"), where("userData.uid", "==", userData.uid), orderBy('date', 'desc'));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
@@ -174,65 +172,68 @@ function renderingBlogs() {
 
     editBtn.forEach((btn, index) => {
 
-        // btn.addEventListener('click', () => {
-        //     blogEditModal.showModal();
+        btn.addEventListener('click', () => {
+            blogEditModal.showModal();
 
-        //     editedTitle.value = allBlogs[index].title;  
-        //     editedContent.value = allBlogs[index].content;
+            editedTitle.value = allBlogs[index].title;
+            editedContent.value = allBlogs[index].content;
 
-        //     updatePostForm.addEventListener('submit', async (e) => {
-        //         e.preventDefault();
-        //         loadingModal.showModal();
-        //         console.log(index);
+            updatePostForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                loadingModal.showModal();
+                console.log(index);
 
-        //         await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
-        //             title: editedTitle.value,
-        //             content: editedContent.value
-        //         });
-        //         gettingBlogs();
-        //         blogEditModal.close();
-        //         loadingModal.close();
-        //     });
-        // });
-
-
-        btn.addEventListener('click', async () => {
-            loadingModal.showModal()
-
-            await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
-                title: prompt('Enter Title'),
-                content: prompt('Enter Description')
+                await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
+                    title: editedTitle.value,
+                    content: editedContent.value
+                });
+                gettingBlogs();
+                blogEditModal.close();
+                loadingModal.close();
+                location.reload();
             });
-            gettingBlogs();
-            loadingModal.close()
-        })
+        });
+
+
+        // btn.addEventListener('click', async () => {
+        //     loadingModal.showModal()
+
+        //     await updateDoc(doc(db, "Blog Posts", allBlogs[index].docId), {
+        //         title: prompt('Enter Title'),
+        //         content: prompt('Enter Description')
+        //     });
+        //     gettingBlogs();
+        //     loadingModal.close()
+        // })
 
     });
 
 
     dltBtn.forEach((btn, index) => {
 
-        // btn.addEventListener('click', () => {
+        btn.addEventListener('click', () => {
 
-        //     blogDltModal.showModal();
+            blogDltModal.showModal();
 
-        //     dltPostBtn.addEventListener('click', async () => {
-        //         loadingModal.showModal();
+            dltPostBtn.addEventListener('click', async () => {
+                loadingModal.showModal();
+                console.log(index);
 
-        //         await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
-        //         gettingBlogs();
-        //         blogDltModal.close();
-        //         loadingModal.close();
-        //     });
-        // });
+                await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
+                gettingBlogs();
+                blogDltModal.close();
+                loadingModal.close();
+                location.reload();
+            });
+        });
 
-        btn.addEventListener('click', async () => {
-            loadingModal.showModal();
-            await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
-            gettingBlogs();
-            loadingModal.close();
+        // btn.addEventListener('click', async () => {
+        //     loadingModal.showModal();
+        //     await deleteDoc(doc(db, "Blog Posts", allBlogs[index].docId));
+        //     gettingBlogs();
+        //     loadingModal.close();
 
-        })
+        // })
 
     });
 };
