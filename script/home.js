@@ -119,7 +119,7 @@ async function gettingBlogs() {
 // Rendering Blogs
 function renderingBlogs() {
     allBlogsSec.innerHTML = '';
-
+    console.log(allBlogs);
     allBlogs.forEach((blog, index) => {
 
         allBlogsSec.innerHTML += `
